@@ -1,0 +1,1969 @@
+/* 変数の定義 (オプション) */
+:root {
+    --header-bg: #F5F7FA;
+    --primary-color: #007bff; /* 例として設定 */
+    --text-color: #333;
+    /* ヘッダーの希望する高さを定義 (例として60px) */
+    --header-height: 60px;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #F5F7FA;
+    margin: 0;
+    padding: 0;
+}
+/* ヘッダー全体の基本スタイル */
+#main-header {
+    background-color: var(--header-bg);
+    position: fixed; /* 画面上部に固定 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* 他の要素の上に表示 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 軽い影 */
+    transition: transform 0.3s ease-in-out; /* スクロール時のアニメーション用 */
+}
+
+.header-content {
+    box-sizing: border-box; /* ★ ここを追加 ★ */
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    height: var(--header-height);
+    padding: 0px;
+}
+
+/* ロゴのスタイル */
+.logo img {
+    height: 40px; /* ロゴ画像の高さ。適宜調整してください */
+    width: auto;
+    display: block;
+    margin-left: 20px;
+}
+
+/* 右側セクションのスタイル */
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* ナビとSNSタブの間のスペース */
+    justify-content: flex-end; 
+}
+.desktop-nav {
+    /* flexコンテナ内でコンテンツを右寄せ（もし必要なら） */
+    display: flex;
+    justify-content: flex-end; 
+}
+/* デスクトップナビゲーション */
+.desktop-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px; /* メニュー項目の間のスペース */
+    justify-content: flex-end; 
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.desktop-nav a:hover {
+    color: var(--primary-color);
+}
+
+.social-tabs {
+    display: flex;
+    align-items: center;
+    /* タブの並び順: メール→LINE (HTMLの順序を尊重) */
+    flex-direction: row-reverse; /* 右から順に LINE, メール と表示するために逆順にする */
+    margin-left: 25px; /* ナビとの間にスペースを作る */
+}
+
+.social-tab {
+    display: flex;
+    justify-content: flex-start; /* テキストを左寄せにするため */
+    align-items: center;
+    width: 40px;
+    height: var(--header-height);
+    text-decoration: none;
+    transition: opacity 0.3s;
+    /* アニメーションを滑らかにする */
+    transition: width 0.3s ease, padding-left 0.3s ease;
+    /* テキストを隠すための overflow 設定 */
+    overflow: hidden;
+    /* テキストとアイコンの間にスペースを設けるための padding */
+    padding-left: 20px; 
+
+}
+
+
+
+/* タブ内のテキストラベルのスタイル */
+.tab-label {
+    white-space: nowrap; /* テキストが折り返さないように */
+    margin-left: 25px;   /* アイコンとテキストの間にスペース */
+    color: white;        /* テキストの色 */
+    font-size: 0.9rem;   /* フォントサイズ */
+    font-weight: bold;
+    /* 初期状態では非表示（overflow: hidden; と width の組み合わせで実現） */
+}
+
+
+/* マウスオーバー時: 幅を拡張してテキストを表示 */
+.social-tab:hover {
+    /* 目的の幅を設定: アイコン(20px) + margin(10px) + テキスト幅 + padding(10px) */
+    /* 例: 20px + 10px + 100px(テキスト推定幅) + 10px = 140px */
+    width: 200px; /* 適切な値に調整してください */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影をつけて目立たせる */
+}
+
+
+    /* アイコンとテキストのスタイル */
+.social-tab img,
+.social-tab .icon-svg {
+    /* アイコンのサイズ（例: 20px）を維持 */
+    flex-shrink: 0; 
+}
+
+.social-tab:hover {
+    opacity: 0.8;
+}
+
+/* タブごとの背景色 (指定のアイコン/色に合わせて調整) */
+.mail-tab {
+    background-color: #2CBADE; /* 例: 赤系 */
+}
+
+.line-tab {
+    background-color: #1C3557; /* 例: LINEの緑 */
+}
+
+.icon-svg {
+    /* SVGのサイズをコンテナより小さく設定 */
+    width: 20px;
+    height: 20px;
+}
+
+.icon-img {
+    display: block;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* ハンバーガーメニューとスマホナビはデスクトップで非表示 */
+.hamburger-menu, .mobile-nav {
+    display: none;
+}
+
+/* --- メディアクエリ (スマートフォン用) --- */
+@media (max-width: 768px) {
+    /* デスクトップ用ナビゲーションを非表示 */
+    .desktop-nav {
+        display: none;
+    }
+    .header-content {
+      padding: 0px 15px;
+    }
+    .logo img {
+      margin-left: 0px;
+    }
+    /* 右側セクションの調整: SNSタブとハンバーガーメニューを配置 */
+    .right-section {
+        gap: 15px;
+    }
+
+    /* ハンバーガーメニューのスタイル */
+    .hamburger-menu {
+        display: flex; /* 表示する */
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 30px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 10; /* モバイルメニューの上に来るように */
+    }
+
+    .hamburger-menu .bar {
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease;
+    }
+
+    /* モバイルナビゲーション (初期状態は非表示) */
+    .mobile-nav {
+        /* 初期設定: 画面外に隠す */
+        position: absolute;
+        top: 100%; /* ヘッダーのすぐ下に配置 */
+        left: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none; /* JavaScriptで表示を制御 */
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .mobile-nav.is-open {
+        display: block;
+    }
+
+    .mobile-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mobile-nav li {
+        margin: 10px 0;
+    }
+
+    .mobile-nav a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px;
+    }
+    
+    /* --- スクロール時のヘッダー表示制御のためのCSS --- */
+    /* 下スクロール以外の時に表示される状態 (デフォルト) */
+    #main-header {
+        transform: translateY(0);
+    }
+
+    /* 下スクロール時にヘッダーを隠す状態 */
+    #main-header.header-hidden {
+        transform: translateY(-100%);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- ドロップダウンメニューの追加スタイル (縦並び/吹き出し風) --- */
+
+/* サブメニューを持つ li 要素の調整 */
+.desktop-nav .has-submenu {
+    position: relative; /* サブメニューを絶対配置するための基点 */
+}
+
+/* サブメニューのコンテナ */
+.submenu-container {
+    /* 「業務内容」リンクの直下に配置 */
+    position: absolute;
+    top: calc(var(--header-height));
+    left: 50%; 
+    transform: translateX(-50%) translateY(10px); /* 初期非表示位置 */
+    
+    width: 200px; /* サブメニューの幅 */
+    
+    /* アニメーション制御 */
+    visibility: hidden; 
+    opacity: 0; 
+    
+    background-color: #F5F7FA; 
+    border-radius: 0px; 
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); 
+    z-index: 1001; 
+    
+    /* アニメーション: 表示時には遅延なし */
+    transition: opacity 0.3s ease 0s, transform 0.3s ease 0s, visibility 0.3s ease 0s;
+}
+
+/* 吹き出しの三角（アロー）を作成 */
+.submenu-container::before {
+    content: '';
+    position: absolute;
+    top: -8px; 
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg); 
+    width: 15px;
+    height: 15px;
+    background-color: #F5F7FA;
+    box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.05); 
+    z-index: 1002;
+}
+
+/* サブメニューの内容（タブの縦並び） */
+.submenu-content {
+    display: flex;
+    flex-direction: column; 
+    padding: 10px 30px; 
+}
+
+/* 個々のサブメニュー項目（タブ） */
+.submenu-item {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 10px 20px;
+    margin: 5;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* ホバー時の装飾 */
+.submenu-item:hover {
+    background-color: var(--primary-color);
+    color: white !important; 
+}
+
+/* === ここがポイント: li要素にホバーした時、遅延なく表示を開始する === */
+.desktop-nav .has-submenu:hover .submenu-container {
+    visibility: visible; 
+    opacity: 1; 
+    transform: translateX(-50%) translateY(0); 
+    
+    /* 非表示動作をリセット（表示を優先） */
+    transition-delay: 0s !important; 
+}
+
+/* === ここがポイント: li要素からマウスが離れた時、非表示に遅延をかける === */
+/* マウスが li 要素から離れたときの非表示に遅延を設定する */
+.desktop-nav .has-submenu .submenu-container {
+    /* 150ミリ秒の遅延を設定: この時間内なら li に戻ると非表示がキャンセルされる */
+    transition-delay: 0.5s; 
+}
+
+
+/* モバイルでの調整 */
+@media (max-width: 768px) {
+    .submenu-container {
+        display: none; 
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#hero-section {
+    /* デスクトップ用背景画像の設定 */
+    position: relative; /* 子要素（画像とコンテンツ）の基準点にする */
+    width: 100%;
+    
+    /* ★アスペクト比ハック★：幅に基づいて高さを決定する */
+    /* 例: 16:9 の画像の場合、100 / 16 * 9 = 56.25% */
+    /* 例: 2:1 の画像の場合、100 / 2 * 1 = 50% */
+    /* あなたの画像の縦横比に合わせてこの値を設定してください */
+    padding-bottom: 56.25%; /* ここを調整！ (例: 2:1 のアスペクト比) */
+
+
+}
+/* 画像要素のスタイル */
+.hero-image {
+    position: absolute; /* 親要素(#hero-section)に対して絶対配置 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* 画像をコンテナ全体に拡大縮小し、アスペクト比を維持しつつ、はみ出た部分を切り取る */
+    object-fit: cover; 
+    
+    /* 画像上部が隠れるのを防ぐため、配置の起点を上辺にする */
+    object-position: top center; /* ★画像上部を常に表示するための設定★ */
+}
+
+
+
+/*(スマホ用画像の切り替え) */
+@media (max-width: 768px) {
+    #hero-section {
+        padding-bottom: 120%; /* 例: 縦長の画像に合わせてアスペクト比を変更 */
+    }
+
+    /* スマホ画像に切り替える */
+    .hero-image {
+        content: url('images-ao/home-mobile.svg'); 
+        object-position: center center; 
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tsuyomi-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto; 
+}
+
+#tsuyomi-section {
+  /* 最大幅を設定し、それ以上の画面サイズではコンテンツを中央に固定 */
+  max-width: 1200px; 
+  margin: 0 auto;
+  /* デスクトップ版の余白（広め） */
+  padding: 60px 40px; 
+  box-sizing: border-box;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  #tsuyomi-section {
+    /* 画面が狭くなったら余白を小さくする */
+    padding: 30px 0px; 
+  }
+}
+
+
+
+
+
+
+
+
+#service-section {
+    background-color: #1C3557; 
+}
+
+.service-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.service-title {
+    font-size: 2em;
+    font-weight: 500;
+    text-align: center;
+    color: #F5F7FA;
+    margin-bottom: 0;
+    margin-top: 100px;
+}
+
+.service-subtitle {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #bdbdbd;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.service-cards-grid {
+    display: grid;
+    /* 4つの縦長の箱を横に並べる */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px; /* カード間のスペース */
+}
+
+.service-card {
+    /* 要素を縦並び中央配置にするための Flexbox 設定 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 縦並びで中央配置 */
+    background-color: #ffffff;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 10px;
+    margin: 100px auto;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1C3557;
+}
+
+.card-image {
+    width: 100%; /* 画像サイズ。適宜調整 */
+    height: 100%;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.card-text {
+    /* テキストは左揃え */
+    text-align: left; 
+    margin-bottom: 30px;
+    width: 100%; /* 親要素の幅いっぱいを使う */
+    font-size: 0.95rem;
+    line-height: 2;
+    flex-grow: 1; /* テキストが占める高さを柔軟に調整 */
+}
+
+
+
+
+
+
+
+
+
+/* --- メディアクエリ: スマートフォン対応 (1列表示) --- */
+@media (max-width: 768px) {
+    /* グリッドを1列に変更 */
+
+    .service-container {
+      padding: 20px;
+}
+
+    .service-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+}
+
+    .service-card {
+    margin: 10px 30px;
+}
+
+.card-image {
+    width: 40%; /* 画像サイズ。適宜調整 */
+    height: 40%;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    margin-bottom: 5px;
+}
+
+}
+
+
+
+/* --- about-section 全体 --- */
+#about-section {
+    position: relative; 
+    width: 100%;
+    
+    /* アスペクト比ハック: 幅に基づいて高さを決定 */
+    /* ここも、背景画像の縦横比に合わせて値を調整してください */
+    padding-bottom: 10%; /* 例: 2:1 のアスペクト比 */
+    
+    /* セクション内のコンテンツを重ねて中央に表示 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 100px; /* 上部タイトルのためのパディング */
+    margin-bottom: 30px;
+}
+
+/* --- 背景画像 (hero-sectionと同じ仕組み) --- */
+.about-bg-image {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: top center; /* 画像上部を常に表示 */
+    z-index: -1; /* コンテンツの下に配置 */
+}
+
+.about-title {
+    color: #1C3557;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.9em;
+    margin-bottom: 0;
+}
+.about-subtitle {
+    font-size: 1.2em;
+    color: #606976;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 70px;
+}
+/* --- コンテンツの左右配置 --- */
+.about-content-wrap {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    max-width: 1000px;
+    width: 100%;
+    padding: 20px 0;
+    z-index: 1; /* 背景画像より手前に配置 */
+    margin-bottom: 50px;
+}
+
+.about-text-content, .about-image-content {
+    flex: 1; /* 左右に均等にスペースを分割 */
+}
+
+/* --- 左側: テキスト --- */
+.about-main-title {
+    color: #1C3557; 
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.7;
+    margin-bottom: 40px;
+}
+
+/* 二行目を左にずらす設定 */
+.shifted-line {
+    display: block;
+    margin-left: 20px; /* 左にずらす量 */
+}
+
+.about-text {
+    color: #1C3557;
+    font-size: 1em;
+    line-height: 2.3;
+    text-align: justify;
+}
+
+/* --- 右側: 画像 --- */
+.about-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    
+}
+
+
+
+
+
+
+
+/*   read more ボタン　　*/
+
+
+.read-more-container {
+  text-align: center;
+}
+
+.read-more-button {
+  display: inline-block;
+  text-decoration: none;
+  color: #1C3557;
+  font-size: 20px;
+  position: relative;
+  padding-bottom: 10px; 
+  transition: color 0.3s ease;
+}
+
+/* 1. 線を作成 (::after)  */
+.read-more-button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #1C3557; 
+  transition: background-color 0.3s ease;
+}
+
+/* 2. ドット（円）を作成 (::before) - 基準点を固定 */
+.read-more-button::before {
+  content: '';
+  position: absolute;
+  /* ⭐︎ 初期位置: leftを0にし、transformでドットの中心を線の開始点に */
+  left: 0; 
+  bottom: -1px; 
+  width: 6px; 
+  height: 6px;
+  border-radius: 50%; 
+  background-color: #2CBADE; 
+  
+  /* 初期状態: ドットの左半分が隠れる位置 */
+  transform: translateX(-50%); 
+  
+  /* ⭐︎ トランジションを「transform」から「left」へ変更 */
+  transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease;
+}
+
+
+.read-more-button:hover {
+  color: #2CBADE; 
+}
+
+.read-more-button:hover::after {
+  background-color: #1C3557;
+}
+
+/* ⭐︎ ホバー時のドットの変化: leftプロパティを使って移動 */
+.read-more-button:hover::before {
+  /* left: 100%に設定すると、ドットの開始点がリンクボタンの右端に到達 */
+  left: 100%; 
+  /* transform: translateX(-50%)を維持することで、ドットの中心が右端にくる */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+    #about-section {
+        padding-bottom: 30%; /* 縦長画像に合わせて高さを調整 */
+        padding-top: 50px;
+    }
+
+    /* スマホ用画像に切り替え (任意) */
+    .about-bg-image {
+        content: url('images-ao/about-mobile.svg'); /* スマホ用画像パスに修正 */
+        object-position: center center;
+    }
+    
+    /* 左右配置を解除し、要素を縦に積み重ねる */
+    .about-content-wrap {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* タイトルと画像サイズを調整 */
+    .about-main-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    
+    .shifted-line {
+        margin-left: 0; /* スマホでは左寄せを解除し、中央寄せに戻す */
+    }
+    
+    .about-image-content {
+        order: -1; /* スマホで画像を上部に移動させたい場合 */
+    }
+    
+    .about-image {
+        max-width: 80%;
+        display: block; 
+        margin: 0 auto; 
+    }
+    
+    .about-text {
+        text-align: left;
+    }
+    
+    .read-more-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contact-section {
+    position: relative;
+    padding-bottom: 50px; 
+    overflow: hidden; /* 背景がはみ出さないように */
+}
+
+/* 背景画像用のdiv */
+.contact-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* 画像の高さを確保するため、セクションの最小高を設定 */
+    min-height: 450px; 
+    background-image: url('images-ao/contact.jpg'); 
+    background-size: cover; /* 画面全体を覆うように拡大・縮小 */
+    background-position: center; /* 画像を中央に配置 */
+    z-index: 1;
+}
+
+
+.contact-title-container {
+    position: relative; /* 背景の上に表示 */
+    z-index: 2;
+    padding: 30px auto; /* 上下の余白と左右のインナー余白 */
+    width: 100%;
+    /* 画面端から端までの白透かし */
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+
+.contact-title {
+    font-size: 1.9em;
+    font-weight: 700;
+    margin-bottom: 0;
+    color: #3B3732;
+    padding-top: 10px;
+}
+
+.contact-subtitle {
+    font-size: 1.2em;
+    color: #7e7b78;
+    margin-top: 0;
+    padding-bottom: 10px;
+}
+
+
+
+.contact-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 50px; /* ボタン間のスペース */
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.contact-button {
+    /* 正方形のベース */
+    flex-basis: calc(33.333% - 40px/3); /* 横並び3つの幅を計算 (20px*2/3) */
+    max-width: 180px; /* PCでの最大幅 */
+    aspect-ratio: 1 / 1; /* 正方形にする */
+    
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center; /* 垂直方向中央揃え */
+    align-items: center; /* 水平方向中央揃え */
+    
+    /* スタイル */
+    border: 8px solid #F5F7FA;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #F5F7FA;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0px 3px 4px 0px #6d6d6d;
+}
+
+.line {
+  background-color: #1C3557;
+}
+.mail {
+  background-color: #6C99A4;
+}
+.phone {
+  background-color: #3B3732;
+}
+
+.contact-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.button-icon {
+    width: 25%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.button-text {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.button-text p {
+    font-size: 0.8em;
+}
+.phone-text {
+    line-height: 0.7;
+}
+
+.contact-message {
+    font-size: 1.3em;
+    font-weight: 500;
+    color: #ffffff;
+    margin-top: 30px;
+    margin-bottom: 0;
+    text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+/* ================================================= */
+/* 【追加】電話番号のスパム対策 (CSS偽装) */
+/* ================================================= */
+
+/* 1. マスク対象の要素（空の<span>）を対象とする */
+.contact-button.phone .phone-number-mask {
+    position: relative;
+    display: block; /* contentをブロック要素として扱えるようにする */
+    width: auto;
+    height: 1.1em; 
+
+    margin: 0 auto; 
+    overflow: visible; /* 隠れないようにoverflowをvisibleに戻す */
+    color: transparent;
+}
+
+/* 2. ::beforeで正しい電話番号を表示 */
+.contact-button.phone .phone-number-mask::before {
+    /* ⚡ここにユーザーに表示したい正しい番号を記述します⚡ */
+    content: "06-7878-5348"; 
+    
+    /* button-textと同じスタイルを適用 */
+    font-size: 1em; 
+    font-weight: bold;
+    color: #F5F7FA;
+    
+    /* 配置 */
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* 中央寄せ */
+    white-space: nowrap; 
+    
+}
+
+
+.phone-text {
+    line-height: 1.1; /* 行の高さを標準に戻し、番号と時間を表示しやすくする */
+    margin-top: 5px; /* アイコンとの間に少し隙間を空ける */
+}
+
+.button-text p {
+    font-size: 0.8em;
+    margin-top: 5px; /* 番号と受付時間の間の隙間 */
+    margin-bottom: 0;
+    line-height: normal; /* 受付時間自体の行間は標準に */
+}
+
+
+@media (max-width: 768px) {
+    .contact-button {
+        width: 80%; 
+    }
+}
+
+
+
+
+
+
+/* ==================================== */
+/* レスポンシブ対応 (スマホ向け) */
+/* ==================================== */
+@media (max-width: 768px) {
+    .contact-background {
+        background-image: url('images-ao/contact-mobile.jpg');
+        height: 100%;
+    }
+
+    .button-group {
+        flex-direction: column; /* ボタンを縦並びにする */
+        gap: 15px;
+    }
+
+    .contact-button {
+        /* スマホでは横幅いっぱいに広がり、縦長になるのを防ぐ */
+        max-width: 300px; 
+        width: 30%; /* 中央寄せにするため幅を少し狭める */
+        margin: 0 auto;
+        /* 正方形を維持 */
+        flex-basis: auto;
+    }
+
+    .button-icon {
+        width: 35%; /* 正方形の50%の幅 */
+        height: auto;
+        margin-bottom: 5px;
+    }
+
+    .button-text {
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* ==================================== */
+/* 1. 全体レイアウト */
+/* ==================================== */
+.main-footer {
+    background-color: #F5F7FA; /* 背景色はお好みに合わせて調整 */
+    color: #1C3557;
+    padding: 40px 20px;
+    text-align: center; /* コンテンツ全体を中央寄せにするための設定 */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* 要素間に均等なスペース */
+    align-items: flex-start; /* 上端揃え */
+    padding-bottom: 30px;
+}
+
+.footer-item {
+    flex-basis: 30%; /* 各要素の基準幅 */
+    text-align: left; /* 各アイテム内のテキストは左寄せに戻す */
+}
+
+/* ロゴの調整 */
+.footer-logo {
+    display: flex; /* ロゴ画像を中央に配置するため */
+    justify-content: right;
+    align-items: center;
+    height: 170px; /* 他のコンテンツの高さに合わせる */
+}
+.footer-logo-img {
+    max-width: 170px; /* ロゴ画像の最大幅 */
+    height: auto;
+}
+
+.footer-info {
+    text-align: left; 
+}
+
+.footer-address p {
+    margin: 0;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+
+/* ==================================== */
+/* 2. ミニコンタクトボタン */
+/* ==================================== */
+.footer-contact {
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    align-items: center; /* 全体を中央寄せ */
+    gap: 10px;
+}
+
+.contact-button-mini {
+    display: flex;
+    align-items: center;
+    width: 200px; /* ボタンの幅 */
+    height: 35px;
+    padding: 8px 15px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #F5F7FA;
+    transition: background-color 0.3s;
+}
+
+/* 各ボタンの色 */
+.line-mini { background-color: #1C3557; }
+.mail-mini { background-color: #6C99A4; }
+.phone-mini { background-color: #3B3732; }
+
+.contact-button-mini:hover {
+    opacity: 0.8;
+}
+
+.button-icon-mini {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.contact-button-mini-text {
+    flex-grow: 1; /* アイコンの隣のテキストを広げる */
+    text-align: center; /* テキストを中央寄せ */
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+/* ==================================== */
+/* 3. 電話番号のスパム対策（フッター用） */
+/* ==================================== */
+
+/* マスク要素の設定 */
+.phone-number-mask-mini {
+    /* 親要素の contact-button-mini-text 内で中央に配置 */
+    display: block; 
+    position: relative;
+    width: 100%;
+    height: 1.5em; /* 1行分の高さを確保 */
+    
+    
+}
+
+/* ::beforeで正しい番号を表示 */
+.phone-number-mask-mini::before {
+    /* ⚡ここにハイフン付きの正しい番号を記述します⚡ */
+    content: "06-7878-5348"; 
+    
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* 中央寄せ */
+    
+    font-weight: 500;
+    color: inherit; /* 親要素の文字色を継承 */
+    white-space: nowrap; /* 改行防止 */
+}
+
+
+/* ==================================== */
+/* 4. ナビゲーションメニュー */
+/* ==================================== */
+.footer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.footer-nav li a {
+    color: #1C3557;
+    text-decoration: none;
+    font-size: 1em;
+    line-height: 1.7;
+}
+
+.footer-nav li a:hover {
+    text-decoration: underline;
+}
+
+/* コピーライト */
+.footer-copyright {
+    border-top: 1px solid #95A4B9;
+    padding-top: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+.footer-copyright p {
+    margin: 0;
+    font-size: 0.8em;
+    color: #95A4B9;
+}
+
+
+/* ==================================== */
+/* 5. レスポンシブ対応 (スマホ向け) */
+/* ==================================== */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* 縦に並べる */
+        align-items: center; /* 中央揃え */
+    }
+
+    .footer-item {
+        flex-basis: auto;
+        width: 100%;
+        margin-bottom: 30px;
+        text-align: center; /* スマホでは全て中央寄せ */
+    }
+    
+    .footer-info {
+        order: 3; /* 住所とナビを一番下に移動 */
+        text-align: center;
+    }
+    
+    .footer-contact {
+        order: 2; /* ボタンを中央に配置 */
+    }
+    
+    .footer-logo {
+        order: 1; /* ロゴを一番上に配置 */
+        height: auto;
+        justify-content: center;
+    }
+    
+    .footer-address p {
+        margin: 5px 0;
+    }
+
+    .footer-nav ul {
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* 　　　業務内容　　　 */
+
+#service-page {
+    width: 100%; /* ページの端から端まで */
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.service-header {
+    background-color: #1C3557;
+    color: #F5F7FA;
+    text-align: center;
+    padding: 70px 0 40px 0;
+}
+
+.service-header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.service-header h2 {
+    font-size: 1.2em;
+    margin: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.service-content {
+    padding: 20px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* サービス項目間の区切り線 */
+.service-divider {
+    border: none;
+    border-top: 2px dotted #AAAAAA;
+    margin: 20px 0;
+}
+
+.service-item {
+    padding: 10px 0;
+}
+
+.service-item .service-title {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.service-item img {
+    display: block;
+    width: 20%;
+    height: auto;
+    object-fit: cover;
+    margin: 0 auto 5px auto; /* 左右マージンをautoにすることで中央揃え */
+}
+
+/* 詳細2つを横並べにするコンテナ */
+.service-details-container {
+    display: flex;
+    /* ★★★ 1つのdetail-boxを中央に配置する修正 ★★★ */
+    justify-content: center; /* これを追加 */
+    gap: 35px; /* 詳細ボックス間のスペース */
+}
+
+.detail-box {
+    flex: 1; /* 均等な幅 */
+    padding: 20px;
+    max-width: 600px;
+    /* ② リストを中央寄せにするための準備 */
+    text-align: center;
+}
+
+/* 詳細タイトル */
+.detail-box .detail-title {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+
+    /* ★★★ 追加・変更するスタイル ★★★ */
+    background-color: #2CBADE; /* 指定の背景色 */
+    color: #FFF;                /* 文字色を白に（視認性向上のため） */
+    padding: 5px 20px;          /* 上下のパディングと左右のパディング */
+    border-radius: 3px;         /* 角丸を追加 */
+    display: inline-block;      /* 中央寄せと幅の制御のため */
+    max-width: 90%;             /* ボックスが伸びすぎるのを防ぐ */
+
+}
+
+/* グレーの縦棒 */
+.detail-separator {
+    width: 2px;
+    height: 50px;
+    background-color: #AAAAAA;
+    margin: 0 auto 15px auto;
+}
+
+/* ② detail-menuを左揃えの中央寄せにする修正 */
+.detail-box .detail-menu {
+    display: inline-block; /* 中央寄せのために横幅を内容に合わせる */
+    margin: 0 auto 10px auto; /* 左右autoで親要素（.detail-box）内で中央寄せ */
+    padding-left: 0; /* 不要なパディングをリセット */
+    list-style: none; /* リストのスタイルをリセット */
+    text-align: left; /* リスト項目（<h4>）のテキストを左揃えにする */
+}
+
+/* リスト項目（<h4>）にも左揃えを適用 */
+.detail-menu h4 {
+    text-align: left;
+    font-size:large;
+}
+
+/* 詳細テキスト */
+.detail-box .detail-text {
+    text-align: left; /* 左揃えに戻す */
+    line-height: 1.5;
+}
+
+/* レスポンシブ対応 (画面幅が狭い場合、詳細を縦並びに) */
+@media (max-width: 768px) {
+    .service-details-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+.contact-line-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Noto sans JP';
+    background-color: #f4f7f6;
+}
+
+.contact-line {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.contact-line h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 3px solid #00c300; /* LINEカラーをイメージ */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.contact-line p {
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.line-button {
+    width: 300px;
+    max-width: 100%; /* 親要素からはみ出さないように */
+    margin-left: auto; /* 左側のマージンを自動調整 */
+    margin-right: auto; /* 右側のマージンを自動調整 */
+    display: block; /* margin: autoを適用するために必要 */
+
+    padding: 15px 20px;
+    background-color: #00c300; /* LINEカラー */
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 195, 0, 0.3);
+}
+
+.line-button:hover {
+    background-color: #00a800;
+    transform: translateY(-2px);
+}
+
+.note {
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ベーススタイル */
+.about {
+    background-color: #F5F5F5; /* 背景色 */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.about-page-section {
+    padding: 60px 20px;
+    margin-bottom: 20px;
+}
+
+.about-page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.about-page-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 50px;
+    padding-bottom: 10px;
+    display: block; /* 中央揃えを確実にするため */
+    /* スタイリッシュな下線 */
+    position: relative;
+}
+
+.about-page-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: #3498db; /* アクセントカラー */
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+
+/* ====================================
+   1. PROFILE セクション
+   ==================================== */
+.profile-content {
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    align-items: center; /* 中央揃え */
+    gap: 20px;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-name {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #34495e;
+    margin: 10px 0 0;
+}
+
+.career-timeline {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* ====================================
+   2. MESSAGE セクション
+   ==================================== */
+.message-section {
+    padding: 80px 20px; /* 上下のパディングを多めに */
+}
+
+.message-box {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.message-text {
+    text-align: justify;
+    margin-bottom: 30px;
+    color: #555;
+    line-height: 2;
+}
+
+.sign-area {
+    text-align: right; /* サイン画像を右寄せ */
+}
+
+.signature-image {
+    max-width: 150px;
+    height: auto;
+    opacity: 0.8;
+}
+
+
+/* ====================================
+   3. 事務所概要 セクション
+   ==================================== */
+.office-table {
+    width: 100%;
+    max-width: 700px; /* テーブルの最大幅を固定し中央寄せ */
+    margin: 0 auto;
+    border-collapse: separate; /* セル間のスペースを確保 */
+    border-spacing: 0 10px; /* セル間に10pxのスペース */
+}
+
+.office-table th, 
+.office-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.office-table th {
+    width: 30%;
+    background-color: #ecf0f1; /* 項目名の背景色 */
+    color: #2c3e50;
+    font-weight: 700;
+    border-radius: 5px 0 0 5px; /* 左側に角丸 */
+}
+
+.office-table td {
+    width: 70%;
+    background-color: #ffffff;
+    border-radius: 0 5px 5px 0; /* 右側に角丸 */
+    color: #555;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); /* 項目ごとに影 */
+}
+
+.office-table tr:last-child th,
+.office-table tr:last-child td {
+    border-bottom: none; /* 最後の行の下線は不要 */
+}
+
+/* ====================================
+   4. Googleマップ埋め込み セクション
+   ==================================== */
+.google-map-embed {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden; /* iframeの角丸を適用 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.google-map-embed iframe {
+    display: block;
+    width: 100%;
+}
+
+
+/* ================================================= */
+/* 【追加】事務所概要 - 電話番号のスパム対策 (CSS偽装) */
+/* ================================================= */
+
+
+.office-phone-link {
+    text-decoration: none; 
+    color: #555; 
+}
+
+/* 1. マスク対象の要素（空の<span>）の親要素 */
+.office-phone-link .phone-number-mask {
+    position: relative;
+    display: inline-block; /* インライン要素として扱い、テーブル内で自然に表示 */
+    /* ボット対策としてダミーのテキストサイズ分のスペースを確保（必須ではないが推奨） */
+    width: 100px; 
+    height: 1.3em; 
+    line-height: 1.8em;
+    overflow: hidden; 
+    color: transparent; 
+}
+
+/* 2. ::beforeで正しい電話番号を表示 */
+.office-phone-link .phone-number-mask::before {
+    /* ⚡️ここにユーザーに表示したい正しい番号を記述します⚡️ */
+    content: "06-7878-5348"; 
+    
+    font-size: 1em; 
+    font-weight: normal;
+    color: #555; 
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap; 
+}
+
+.office-table td p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contact-page {
+    /* 背景：F5F7FA */
+    background-color: #F5F7FA;
+    padding: 40px 20px; /* パディングで上下左右に余白 */
+    display: flex;
+    justify-content: center;
+}
+
+.contact-container {
+    max-width: 700px; /* フォームの最大幅を設定 */
+    width: 100%;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* テキスト：1C3557 */
+.contact-title,
+.contact-description,
+label,
+.form-checkbox {
+    color: #1C3557;
+}
+
+.contact-title {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.contact-description {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 0.95em;
+}
+
+.contact-form {
+    display: grid;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* 必須項目（赤星マーク） */
+.required-star {
+    color: #E74C3C; /* 赤色 */
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    color: #1C3557;
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #3498DB; /* フォーカス時の色 */
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+textarea {
+    resize: vertical; /* 垂直方向のみリサイズ可能 */
+}
+
+/* チェックボックスのスタイル */
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+}
+
+.form-checkbox input[type="checkbox"] {
+    /* デフォルトのチェックボックスを非表示またはカスタマイズ */
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #3498DB;
+    border-radius: 3px;
+    margin-right: 8px;
+    cursor: pointer;
+    position: relative;
+    top: -1px; /* 微調整 */
+}
+
+.form-checkbox input[type="checkbox"]:checked {
+    background-color: #3498DB;
+    border-color: #3498DB;
+}
+
+.form-checkbox input[type="checkbox"]:checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.privacy-link {
+    color: #3498DB; /* プライバシーポリシーのリンク色 */
+    text-decoration: none;
+    border-bottom: 1px solid #3498DB;
+    padding-bottom: 1px;
+    transition: color 0.3s;
+}
+
+.privacy-link:hover {
+    color: #2980B9;
+    border-bottom-color: #2980B9;
+}
+
+
+/* 送信ボタンのスタイル */
+.submit-button {
+    background-color: #3498DB; /* ボタンの背景色 */
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.submit-button:hover {
+    background-color: #2980B9;
+}
+
+.submit-button:active {
+    transform: scale(0.99);
+}
+
+/* レスポンシブ対応の調整（今回は不要だが、より細かい調整はここで） */
+@media (max-width: 500px) {
+    .contact-container {
+        padding: 20px;
+    }
+
+    .contact-title {
+        font-size: 1.7em;
+    }
+
+    .submit-button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------- */
+/* Topへ戻るボタンのスタイル */
+/* -------------------------------------- */
+
+.back-to-top {
+    
+    position: fixed;
+    right: 20px; /* 右からの位置 */
+    bottom: 100px; /* 下からの位置 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 中央揃え */
+    
+    text-decoration: none; /* リンクの下線を削除 */
+    color: #1C3557;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px 5px; /* 上下のパディングを広く、左右を狭くして縦長に */
+    border-radius: 5px; /* 角を丸く */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 軽い影 */
+    transition: background-color 0.3s, color 0.3s; /* ホバー時のトランジション */
+    z-index: 1000; /* 他の要素より手前に表示 */
+}
+
+/* ホバー時のスタイル */
+.back-to-top:hover {
+    background-color: #f0f0f0; /* 背景色を少し暗く */
+    color: #000;
+}
+
+/* アイコン（上矢印の円囲み） */
+.back-to-top__icon-wrapper {
+    /* 円のサイズと形状 */
+    width: 40px;
+    height: 40px;
+    border: 2px solid #1C3557; /* 円の線 */
+    border-radius: 50%; /* 完全な円に */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px; /* 下のテキストとの間隔 */
+}
+
+/* 上矢印のCSS表現 (長さ1のイメージ) */
+.back-to-top__arrow {
+    width: 0;
+    height: 0;
+    /* ボーダーで三角形を作成 */
+    border-left: 5px solid transparent; /* 左右の透明な部分 */
+    border-right: 5px solid transparent;
+    border-bottom: 7px solid #1C3557; /* 矢印の色と高さ */
+    /* 上矢印を短く見せるため、少し上に配置 */
+    transform: translateY(-1px); 
+}
+
+/* 「Top」テキスト */
+.back-to-top__text {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1; /* 行の高さを調整 */
+    margin-bottom: 5px; /* 下の縦棒線との間隔 */
+}
+
+/* 縦棒線 (1px) */
+.back-to-top__line {
+    width: 2px; /* 幅1px */
+    height: 80px; /* 線の長さ */
+    background-color: #1C3557; /* 線の色 */
+}
+
+
+@media (max-width: 500px) {
+  .back-to-top {
+    right: 0px; /* 右からの位置 */
+    padding: 10px 3px; /* 上下のパディングを広く、左右を狭くして縦長に */
+}
+  .back-to-top__line {
+    width: 0px; /* 幅1px */
+    height: 0px; /* 線の長さ */
+}
+}
