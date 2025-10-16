@@ -50,3 +50,65 @@ document.addEventListener('DOMContentLoaded', function() {
           });
     });
 });
+
+
+
+
+
+
+
+
+// 1. 要素を取得
+    const backToTopButton = document.querySelector('.back-to-top');
+
+    // 2. スクロールイベントのリスナーを設定
+    window.addEventListener('scroll', () => {
+        // 現在のスクロール位置 (縦方向) を取得
+        const scrollPosition = window.scrollY;
+        
+        // ボタンを表示させる閾値 (例: 500ピクセル)
+        const displayThreshold = 1000; 
+
+        if (scrollPosition > displayThreshold) {
+            // 閾値を超えたら、表示用クラスを追加
+            backToTopButton.classList.add('is-visible');
+        } else {
+            // 閾値以下の場合は、表示用クラスを削除（非表示に戻す）
+            backToTopButton.classList.remove('is-visible');
+        }
+    });
+
+    // 3. クリック時のスムーズスクロール処理（おまけ）
+    backToTopButton.addEventListener('click', (e) => {
+        e.preventDefault(); // リンクのデフォルト動作（急なジャンプ）をキャンセル
+        window.scrollTo({
+            top: 0, 
+            behavior: 'smooth' // スムーズにスクロール
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+    // ハンバーガーメニューのアニメーション
+const menuButton = document.querySelector('.hamburger-menu');
+const mobileNav = document.querySelector('.mobile-nav');
+
+if (menuButton && mobileNav) {
+    menuButton.addEventListener('click', () => {
+        // is-open と is-active クラスを同時に切り替える
+        mobileNav.classList.toggle('is-open');
+        menuButton.classList.toggle('is-active'); 
+        
+        // メニューが開いたときに body のスクロールを停止
+        document.body.classList.toggle('no-scroll');
+    });
+}
+
